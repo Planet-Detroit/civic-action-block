@@ -1,0 +1,54 @@
+.civic-action-placeholder {
+	border: 2px dashed #ccc;
+	border-radius: 4px;
+	padding: 24px;
+	text-align: center;
+	background: #f9f9f9;
+
+	&__icon {
+		.dashicons {
+			font-size: 36px;
+			width: 36px;
+			height: 36px;
+			color: #007cba;
+		}
+	}
+
+	&__label {
+		font-size: 1.1em;
+		font-weight: 600;
+		margin: 8px 0 4px;
+	}
+
+	&__instructions {
+		color: #757575;
+		margin: 0 0 12px;
+		font-size: 0.9em;
+	}
+
+	&__textarea {
+		width: 100%;
+		min-height: 120px;
+		font-family: monospace;
+		font-size: 12px;
+		padding: 8px;
+		border: 1px solid #ccc;
+		border-radius: 2px;
+		resize: vertical;
+	}
+
+	&__actions {
+		margin-top: 12px;
+		display: flex;
+		gap: 8px;
+		justify-content: center;
+	}
+}
+
+.civic-action-preview {
+	&__title {
+		margin: 0 0 0.5em;
+		font-size: 1.1em;
+		font-weight: 700;
+	}
+}

@@ -1,0 +1,34 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "planet-detroit/civic-action",
+	"version": "1.0.0",
+	"title": "Civic Action Box",
+	"category": "widgets",
+	"icon": "megaphone",
+	"description": "Embed a civic action box with alignment support for text wrapping.",
+	"keywords": [ "civic", "action", "meeting", "comment", "toolbox" ],
+	"supports": {
+		"align": [ "left", "right", "center" ],
+		"html": false
+	},
+	"attributes": {
+		"align": {
+			"type": "string",
+			"default": "right"
+		},
+		"civicHtml": {
+			"type": "string",
+			"default": ""
+		},
+		"boxTitle": {
+			"type": "string",
+			"default": "Civic Action Toolbox"
+		}
+	},
+	"textdomain": "civic-action-block",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

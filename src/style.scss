@@ -1,0 +1,42 @@
+.wp-block-planet-detroit-civic-action {
+	// Explicit floats with !important to override block theme layout rules.
+	// Block themes (TT4, TT5) use is-layout-constrained which applies
+	// margin-left/right: auto !important to children. We need !important
+	// to win that specificity battle and actually float the block.
+	&.alignright {
+		float: right !important;
+		max-width: 350px;
+		width: 100%;
+		margin: 0 0 1em 1.5em !important;
+	}
+
+	&.alignleft {
+		float: left !important;
+		max-width: 350px;
+		width: 100%;
+		margin: 0 1.5em 1em 0 !important;
+	}
+
+	&.aligncenter {
+		max-width: 480px;
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+
+	// Title styling
+	&__title {
+		margin: 0 0 0.5em;
+		font-size: 1.1em;
+		font-weight: 700;
+	}
+
+	// Responsive: stack on mobile instead of floating
+	@media (max-width: 767px) {
+		&.alignleft,
+		&.alignright {
+			float: none !important;
+			max-width: 100% !important;
+			margin: 1em 0 !important;
+		}
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"name": "civic-action-block",
+	"version": "1.0.0",
+	"description": "Gutenberg block for civic action content with alignment support.",
+	"author": "Planet Detroit",
+	"license": "GPL-2.0-or-later",
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start",
+		"test": "wp-scripts test-unit-js --no-cache",
+		"test:php": "npx wp-env run tests-cli --env-cwd=wp-content/plugins/civic-action-block wp eval-file tests/test-render.php",
+		"plugin-zip": "wp-scripts plugin-zip"
+	},
+	"devDependencies": {
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.2",
+		"@wordpress/env": "^10.39.0",
+		"@wordpress/scripts": "^30.0.0"
+	}
+}
