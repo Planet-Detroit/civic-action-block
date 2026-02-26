@@ -68,11 +68,31 @@ test( 'shows paste UI when civicHtml is empty', () => {
 	expect( screen.getByText( 'Apply' ) ).toBeInTheDocument();
 } );
 
-// When content exists, show a preview of the civic action box
+// When content exists, show the preview AND an editable HTML textarea
+// so editors can modify the HTML after pasting
 test( 'shows preview when civicHtml has content', () => {
 	renderEdit( { civicHtml: '<div>Test content</div>' } );
-	expect( screen.queryByPlaceholderText( 'Paste HTML here...' ) ).not.toBeInTheDocument();
 	expect( screen.getByText( 'Test content' ) ).toBeInTheDocument();
+} );
+
+// The HTML textarea should be visible and populated with the civicHtml
+// so editors can see and edit the raw HTML after pasting
+test( 'shows editable HTML textarea when civicHtml has content', () => {
+	renderEdit( { civicHtml: '<div>Test content</div>' } );
+	const textarea = screen.getByLabelText( 'HTML Code' );
+	expect( textarea ).toBeInTheDocument();
+	expect( textarea.value ).toBe( '<div>Test content</div>' );
+} );
+
+// Editing the HTML textarea should update the civicHtml attribute
+// so changes are saved to the block
+test( 'editing HTML textarea updates civicHtml attribute', () => {
+	const setAttributes = jest.fn();
+	renderEdit( { civicHtml: '<div>Old</div>' }, setAttributes );
+	const textarea = screen.getByLabelText( 'HTML Code' );
+	fireEvent.change( textarea, { target: { value: '<div>Updated</div>' } } );
+	fireEvent.blur( textarea );
+	expect( setAttributes ).toHaveBeenCalledWith( { civicHtml: '<div>Updated</div>' } );
 } );
 
 // The Apply button should be disabled when the textarea is empty

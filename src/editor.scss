@@ -51,4 +51,28 @@
 		font-size: 1.1em;
 		font-weight: 700;
 	}
+
+	&__html-label {
+		display: block;
+		margin-top: 12px;
+		padding-top: 12px;
+		border-top: 1px solid #ddd;
+		font-size: 0.8em;
+		font-weight: 600;
+		color: #757575;
+	}
+
+	&__html-editor {
+		display: block;
+		width: 100%;
+		min-height: 100px;
+		margin-top: 4px;
+		font-family: monospace;
+		font-size: 11px;
+		padding: 8px;
+		border: 1px solid #ccc;
+		border-radius: 2px;
+		resize: vertical;
+		box-sizing: border-box;
+	}
 }

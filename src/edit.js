@@ -7,6 +7,9 @@ export default function Edit( { attributes, setAttributes } ) {
 	const { civicHtml, boxTitle } = attributes;
 	const [ pasteValue, setPasteValue ] = useState( '' );
 	const [ isReplacing, setIsReplacing ] = useState( false );
+	// Track local edits to the HTML textarea so we only save on blur
+	const [ editValue, setEditValue ] = useState( '' );
+	const [ isEditDirty, setIsEditDirty ] = useState( false );
 	const blockProps = useBlockProps();
 
 	const showPasteUI = ! civicHtml || isReplacing;
@@ -24,6 +27,16 @@ export default function Edit( { attributes, setAttributes } ) {
 		setAttributes( { civicHtml: '' } );
 		setPasteValue( '' );
 		setIsReplacing( false );
+		setEditValue( '' );
+		setIsEditDirty( false );
+	}
+
+	// Save edits when the HTML textarea loses focus
+	function handleEditBlur() {
+		if ( isEditDirty ) {
+			setAttributes( { civicHtml: editValue } );
+			setIsEditDirty( false );
+		}
 	}
 
 	return (
@@ -102,6 +115,19 @@ export default function Edit( { attributes, setAttributes } ) {
 							className="civic-action-preview__content"
 							dangerouslySetInnerHTML={ { __html: civicHtml } }
 						/>
+						<label className="civic-action-preview__html-label">
+							{ __( 'HTML Code', 'civic-action-block' ) }
+							<textarea
+								className="civic-action-preview__html-editor"
+								value={ isEditDirty ? editValue : civicHtml }
+								onChange={ ( e ) => {
+									setEditValue( e.target.value );
+									setIsEditDirty( true );
+								} }
+								onBlur={ handleEditBlur }
+								rows={ 6 }
+							/>
+						</label>
 					</div>
 				) }
 			</div>
