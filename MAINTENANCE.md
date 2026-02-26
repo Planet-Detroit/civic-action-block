@@ -47,6 +47,11 @@ This only needs to be done once. The script automatically detects civic action b
 - You may need to click **Apply** after pasting the HTML
 - If it still doesn't work, try **Replace Content** in the sidebar and paste again
 
+### Reader response form doesn't submit / jumps to top of page
+- The JavaScript must be loaded via WPCode (see WordPress JavaScript Setup above)
+- Verify the WPCode snippet is **Active** and set to **Site Wide Footer**
+- If new HTML elements are added to the builder output, their tags/attributes must be added to the `wp_kses` allowlist in `src/render.php` — otherwise WordPress silently strips them
+
 ### Block disappeared after saving
 - Check if the `civicHtml` content was accidentally cleared — use the WordPress revision history to restore
 

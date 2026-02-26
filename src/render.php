@@ -51,6 +51,7 @@ $wrapper_attributes = get_block_wrapper_attributes();
 					'p'     => array(
 						'style' => true,
 						'class' => true,
+						'id'    => true,
 					),
 					'h1'    => array( 'style' => true, 'class' => true ),
 					'h2'    => array( 'style' => true, 'class' => true ),
