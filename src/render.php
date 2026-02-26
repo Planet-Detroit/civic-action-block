@@ -84,6 +84,40 @@ $wrapper_attributes = get_block_wrapper_attributes();
 						'd'    => true,
 						'fill' => true,
 					),
+					'form'     => array(
+						'id'     => true,
+						'style'  => true,
+						'class'  => true,
+					),
+					'input'    => array(
+						'type'        => true,
+						'id'          => true,
+						'class'       => true,
+						'style'       => true,
+						'placeholder' => true,
+						'required'    => true,
+						'value'       => true,
+						'data-action' => true,
+						'data-label'  => true,
+					),
+					'textarea' => array(
+						'id'          => true,
+						'class'       => true,
+						'style'       => true,
+						'placeholder' => true,
+						'required'    => true,
+					),
+					'button'   => array(
+						'type'  => true,
+						'id'    => true,
+						'class' => true,
+						'style' => true,
+					),
+					'label'    => array(
+						'style' => true,
+						'class' => true,
+						'for'   => true,
+					),
 				)
 			)
 		);
