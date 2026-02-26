@@ -30,6 +30,13 @@
 		font-weight: 700;
 	}
 
+	// Fix checkbox + bullet double marker on existing and new posts.
+	// When a list contains checkboxes, suppress bullets and remove indent.
+	&__content .civic-action-box ul:has(.civic-checkbox) {
+		list-style: none !important;
+		padding-left: 0 !important;
+	}
+
 	// Responsive: stack on mobile instead of floating
 	@media (max-width: 767px) {
 		&.alignleft,

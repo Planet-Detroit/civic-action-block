@@ -67,6 +67,24 @@ export default function Edit( { attributes, setAttributes } ) {
 						</>
 					) }
 				</PanelBody>
+				{ civicHtml && ! isReplacing && (
+					<PanelBody
+						title={ __( 'HTML Code', 'civic-action-block' ) }
+						initialOpen={ false }
+					>
+						<textarea
+							className="civic-action-sidebar-html"
+							value={ isEditDirty ? editValue : civicHtml }
+							onChange={ ( e ) => {
+								setEditValue( e.target.value );
+								setIsEditDirty( true );
+							} }
+							onBlur={ handleEditBlur }
+							rows={ 12 }
+							aria-label={ __( 'HTML Code', 'civic-action-block' ) }
+						/>
+					</PanelBody>
+				) }
 			</InspectorControls>
 
 			<div { ...blockProps }>
@@ -115,19 +133,6 @@ export default function Edit( { attributes, setAttributes } ) {
 							className="civic-action-preview__content"
 							dangerouslySetInnerHTML={ { __html: civicHtml } }
 						/>
-						<label className="civic-action-preview__html-label">
-							{ __( 'HTML Code', 'civic-action-block' ) }
-							<textarea
-								className="civic-action-preview__html-editor"
-								value={ isEditDirty ? editValue : civicHtml }
-								onChange={ ( e ) => {
-									setEditValue( e.target.value );
-									setIsEditDirty( true );
-								} }
-								onBlur={ handleEditBlur }
-								rows={ 6 }
-							/>
-						</label>
 					</div>
 				) }
 			</div>
