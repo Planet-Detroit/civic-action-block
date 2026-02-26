@@ -21,7 +21,7 @@ $civicActionUpdateChecker = PucFactory::buildUpdateChecker(
 	__FILE__,
 	'civic-action-block'
 );
-$civicActionUpdateChecker->setBranch( 'main' );
+// Use GitHub releases (not branch) for version detection + release assets for download
 $civicActionUpdateChecker->getVcsApi()->enableReleaseAssets();
 
 function civic_action_block_init() {
