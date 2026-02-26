@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Civic Action Box
  * Description:       A Gutenberg block for embedding civic action content with alignment support.
- * Version:           1.1.0
+ * Version:           1.2.0
  * Author:            Planet Detroit
  * License:           GPL-2.0-or-later
  * Text Domain:       civic-action-block
