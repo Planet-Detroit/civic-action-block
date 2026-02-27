@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Civic Action Box
  * Description:       A Gutenberg block for embedding civic action content with alignment support.
- * Version:           1.2.1
+ * Version:           1.3.0
  * Author:            Planet Detroit
  * License:           GPL-2.0-or-later
  * Text Domain:       civic-action-block
@@ -26,5 +26,10 @@ $civicActionUpdateChecker->getVcsApi()->enableReleaseAssets();
 
 function civic_action_block_init() {
 	register_block_type( __DIR__ . '/build' );
+	// Ask Planet Detroit reader question form — standalone block
+	$ask_pd_dir = __DIR__ . '/build/ask-planet-detroit';
+	if ( file_exists( $ask_pd_dir . '/block.json' ) ) {
+		register_block_type( $ask_pd_dir );
+	}
 }
 add_action( 'init', 'civic_action_block_init' );

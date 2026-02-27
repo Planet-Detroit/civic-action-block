@@ -1,0 +1,73 @@
+// Editor-only styles for the Ask Planet Detroit block preview.
+
+.ask-pd-preview {
+	border: 2px dashed #ea5a39;
+	border-radius: 8px;
+	padding: 20px;
+	background: #fff8e8;
+	max-width: 400px;
+
+	&__icon {
+		font-size: 24px;
+		margin-bottom: 8px;
+	}
+
+	&__title {
+		margin: 0 0 4px;
+		font-size: 15px;
+		font-weight: 700;
+		color: #333;
+	}
+
+	&__subtitle {
+		color: #666;
+		margin: 0 0 12px;
+		font-size: 12px;
+	}
+
+	&__form-placeholder {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+
+	&__row {
+		display: flex;
+		gap: 6px;
+	}
+
+	&__field {
+		background: #fff;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		padding: 6px 10px;
+		font-size: 11px;
+		color: #999;
+
+		&--flex {
+			flex: 1;
+		}
+
+		&--small {
+			width: 60px;
+		}
+	}
+
+	&__btn {
+		background: #ea5a39;
+		color: #fff;
+		border-radius: 4px;
+		padding: 6px 14px;
+		font-size: 12px;
+		font-weight: 600;
+		display: flex;
+		align-items: center;
+	}
+
+	&__note {
+		font-size: 11px;
+		color: #999;
+		font-style: italic;
+		margin: 10px 0 0;
+	}
+}

@@ -1,0 +1,21 @@
+// Frontend styles for the Ask Planet Detroit block.
+// Scoped to .wp-block-planet-detroit-ask-planet-detroit (auto-generated from block name).
+// Most styling is inline in render.php, but this handles alignment and responsive layout.
+
+.wp-block-planet-detroit-ask-planet-detroit {
+	// Alignment support — same pattern as the civic action block
+	&.aligncenter {
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+
+	&.alignwide,
+	&.alignfull {
+		max-width: none;
+
+		> div {
+			max-width: 400px;
+			margin: 0 auto;
+		}
+	}
+}

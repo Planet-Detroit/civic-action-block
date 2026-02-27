@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "planet-detroit/ask-planet-detroit",
+  "version": "1.0.0",
+  "title": "Ask Planet Detroit",
+  "category": "widgets",
+  "icon": "format-chat",
+  "description": "Reader question form — readers ask questions, reporters get AI-powered briefings.",
+  "keywords": [
+    "ask",
+    "question",
+    "reader",
+    "form",
+    "planet detroit"
+  ],
+  "supports": {
+    "html": false,
+    "align": [
+      "center",
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "formTitle": {
+      "type": "string",
+      "default": "Got a question about this?"
+    },
+    "formSubtitle": {
+      "type": "string",
+      "default": "Ask our reporters. We'll only use your info to follow up on your question."
+    }
+  },
+  "textdomain": "civic-action-block",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}
