@@ -116,16 +116,11 @@ test( 'Apply button saves pasted HTML to attributes', () => {
 	} );
 } );
 
-// The box title should be displayed in the preview
-test( 'preview shows the box title', () => {
+// Title is now part of the pasted HTML, not rendered separately by the block.
+// The editor preview should NOT add its own title heading.
+test( 'preview does not render a separate title heading', () => {
 	renderEdit( { civicHtml: '<div>Content</div>', boxTitle: 'My Custom Title' } );
-	expect( screen.getByText( 'My Custom Title' ) ).toBeInTheDocument();
-} );
-
-// When boxTitle is empty, no title heading should render
-test( 'preview hides title when boxTitle is empty', () => {
-	renderEdit( { civicHtml: '<div>Content</div>', boxTitle: '' } );
-	expect( screen.queryByText( 'Civic Action Toolbox' ) ).not.toBeInTheDocument();
+	expect( screen.queryByText( 'My Custom Title' ) ).not.toBeInTheDocument();
 } );
 
 // Sidebar should have the Replace and Clear buttons when content exists

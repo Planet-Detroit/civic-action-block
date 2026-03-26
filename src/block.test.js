@@ -30,10 +30,10 @@ test( 'civicHtml attribute exists and defaults to empty string', () => {
 	expect( metadata.attributes.civicHtml.default ).toBe( '' );
 } );
 
-// boxTitle lets editors customize the heading above the civic action content
-test( 'boxTitle attribute defaults to Civic Action Toolbox', () => {
+// boxTitle attribute kept for backwards compatibility (not rendered by the block —
+// title now comes from the pasted civic HTML itself)
+test( 'boxTitle attribute exists for backwards compatibility', () => {
 	expect( metadata.attributes.boxTitle ).toBeDefined();
-	expect( metadata.attributes.boxTitle.default ).toBe( 'Civic Action Toolbox' );
 } );
 
 // HTML editing must be disabled — editors paste from civic-action-builder,

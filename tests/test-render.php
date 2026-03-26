@@ -76,18 +76,10 @@ assert_contains( $output, 'Test', 'Civic HTML content is rendered' );
 
 echo "\n=== Box Title ===\n";
 
-// Title should render as h3
+// Title is now part of the pasted civic HTML, not rendered separately by the block.
+// The block should NOT add its own title heading even if boxTitle attribute is set.
 $output = render_block_with( array( 'civicHtml' => '<p>Test</p>', 'boxTitle' => 'My Title' ) );
-assert_contains( $output, '<h3 class="wp-block-planet-detroit-civic-action__title">My Title</h3>', 'Title renders as h3' );
-
-// Empty title should be omitted entirely
-$output = render_block_with( array( 'civicHtml' => '<p>Test</p>', 'boxTitle' => '' ) );
-assert_not_contains( $output, 'wp-block-planet-detroit-civic-action__title', 'Empty title is hidden' );
-
-// SECURITY: Title with HTML must be escaped (prevents XSS)
-$output = render_block_with( array( 'civicHtml' => '<p>Test</p>', 'boxTitle' => '<script>alert("xss")</script>' ) );
-assert_not_contains( $output, '<script>', 'Script in title is escaped' );
-assert_contains( $output, '&lt;script&gt;', 'Script in title shows as text' );
+assert_not_contains( $output, 'wp-block-planet-detroit-civic-action__title', 'Block does not render separate title (title is in pasted HTML)' );
 
 // ─── Content preservation ───────────────────────────────────────
 

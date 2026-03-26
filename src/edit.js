@@ -4,7 +4,7 @@ import { PanelBody, TextControl, Button } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { civicHtml, boxTitle } = attributes;
+	const { civicHtml } = attributes;
 	const [ pasteValue, setPasteValue ] = useState( '' );
 	const [ isReplacing, setIsReplacing ] = useState( false );
 	// Track local edits to the HTML textarea so we only save on blur
@@ -43,11 +43,6 @@ export default function Edit( { attributes, setAttributes } ) {
 		<>
 			<InspectorControls>
 				<PanelBody title={ __( 'Civic Action Settings', 'civic-action-block' ) }>
-					<TextControl
-						label={ __( 'Box Title', 'civic-action-block' ) }
-						value={ boxTitle }
-						onChange={ ( value ) => setAttributes( { boxTitle: value } ) }
-					/>
 					{ civicHtml && ! isReplacing && (
 						<>
 							<Button
@@ -126,9 +121,6 @@ export default function Edit( { attributes, setAttributes } ) {
 					</div>
 				) : (
 					<div className="civic-action-preview">
-						{ boxTitle && (
-							<h3 className="civic-action-preview__title">{ boxTitle }</h3>
-						) }
 						<div
 							className="civic-action-preview__content"
 							dangerouslySetInnerHTML={ { __html: civicHtml } }

@@ -13,14 +13,10 @@ if ( empty( $civic_html ) ) {
 	return;
 }
 
-$box_title = $attributes['boxTitle'] ?? '';
 $wrapper_attributes = get_block_wrapper_attributes();
 ?>
 
 <div <?php echo $wrapper_attributes; ?>>
-	<?php if ( ! empty( $box_title ) ) : ?>
-		<h3 class="wp-block-planet-detroit-civic-action__title"><?php echo esc_html( $box_title ); ?></h3>
-	<?php endif; ?>
 	<div class="wp-block-planet-detroit-civic-action__content">
 		<?php
 		// The civic HTML comes from the civic-action-builder tool and contains
