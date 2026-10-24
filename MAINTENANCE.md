@@ -30,7 +30,7 @@ The civic action box has interactive features (checkbox tracking, reader respons
 
 This only needs to be done once. The script automatically detects civic action boxes on any page and wires up the interactivity.
 
-## Ads Beside the Box (added in 1.5.0)
+## Ads Beside the Box (added in 1.5.0; panel always visible since 1.5.1)
 
 Newsroom sites that run in-story ads (MinnPost, Bridge and Planet Detroit all use Newspack's ad inserter) drop an ad every few paragraphs. Newspack's ad container "clears" floats, so an ad that lands beside a floated box jumps below the box and pulls the rest of the story down with it, leaving a blank column next to the box.
 

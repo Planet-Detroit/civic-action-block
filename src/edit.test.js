@@ -23,7 +23,7 @@ jest.mock( '@wordpress/block-editor', () => ( {
 } ), { virtual: true } );
 
 jest.mock( '@wordpress/components', () => ( {
-	PanelBody: ( { children, title } ) => <div data-testid="panel" title={ title }>{ children }</div>,
+	PanelBody: ( { children, title, initialOpen } ) => <div data-testid="panel" title={ title } data-initial-open={ String( initialOpen ) }>{ children }</div>,
 	TextControl: ( { label, value, onChange } ) => (
 		<label>
 			{ label }
@@ -188,4 +188,26 @@ test( 'ads panel says no ad plugin was found when PHP passes none', () => {
 	renderEdit( { civicHtml: '<div>Content</div>', align: 'right', adFreeParagraphs: 8 } );
 	expect( screen.getByText( /no in-story ad plugin/i ) ).toBeInTheDocument();
 	expect( screen.queryByLabelText( 'Paragraphs to keep ad-free' ) ).not.toBeInTheDocument();
+} );
+
+// 1.5.1 (Nina, Oct 24 2026): the panel was hidden until HTML was pasted and
+// started collapsed, so nobody found it. It now shows for an empty block too
+// and starts open.
+test( 'ads panel shows even before any HTML is pasted', () => {
+	window.civicActionBlockAds = { slug: 'scaip', name: 'Newspack in-story ads', handled: true };
+	renderEdit( { civicHtml: '', align: 'right', adFreeParagraphs: 8 } );
+	expect( screen.getByTitle( 'Ads beside the box' ) ).toBeInTheDocument();
+	expect( screen.getByLabelText( 'Paragraphs to keep ad-free' ) ).toBeInTheDocument();
+} );
+
+test( 'ads panel starts open', () => {
+	renderEdit( { civicHtml: '<div>Content</div>', align: 'right', adFreeParagraphs: 8 } );
+	expect( screen.getByTitle( 'Ads beside the box' ) ).toHaveAttribute( 'data-initial-open', 'true' );
+} );
+
+// The old builder tool was retired Oct 24 2026; the placeholder names the Toolbox.
+test( 'placeholder tells editors to paste from the Civic Action Toolbox', () => {
+	renderEdit( { civicHtml: '' } );
+	expect( screen.getByText( /Civic Action Toolbox/ ) ).toBeInTheDocument();
+	expect( screen.queryByText( /civic-action-builder/ ) ).not.toBeInTheDocument();
 } );

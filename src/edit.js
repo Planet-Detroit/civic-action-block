@@ -61,7 +61,7 @@ function AdsPanel( { align, adFreeParagraphs, setAttributes } ) {
 	}
 
 	return (
-		<PanelBody title={ __( 'Ads beside the box', 'civic-action-block' ) } initialOpen={ false }>
+		<PanelBody title={ __( 'Ads beside the box', 'civic-action-block' ) } initialOpen={ true }>
 			{ body }
 		</PanelBody>
 	);
@@ -144,9 +144,9 @@ export default function Edit( { attributes, setAttributes } ) {
 						/>
 					</PanelBody>
 				) }
-				{ civicHtml && ! isReplacing && (
-					<AdsPanel align={ align } adFreeParagraphs={ adFreeParagraphs } setAttributes={ setAttributes } />
-				) }
+				{ /* Always shown (1.5.1): editors pick alignment before pasting, and
+				     the panel's main job is to say what happens with ads on this site. */ }
+				<AdsPanel align={ align } adFreeParagraphs={ adFreeParagraphs } setAttributes={ setAttributes } />
 			</InspectorControls>
 
 			<div { ...blockProps }>
@@ -159,7 +159,7 @@ export default function Edit( { attributes, setAttributes } ) {
 							{ __( 'Civic Action Box', 'civic-action-block' ) }
 						</p>
 						<p className="civic-action-placeholder__instructions">
-							{ __( 'Paste your civic action box HTML from the civic-action-builder tool.', 'civic-action-block' ) }
+							{ __( 'Paste the box HTML from the Civic Action Toolbox (Publish tab → Copy HTML).', 'civic-action-block' ) }
 						</p>
 						<textarea
 							className="civic-action-placeholder__textarea"

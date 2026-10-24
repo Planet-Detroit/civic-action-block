@@ -1,6 +1,6 @@
 {
 	"name": "civic-action-block",
-	"version": "1.5.0",
+	"version": "1.5.1",
 	"description": "Gutenberg block for civic action content with alignment support.",
 	"author": "Planet Detroit",
 	"license": "GPL-2.0-or-later",
