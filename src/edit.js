@@ -3,8 +3,72 @@ import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, TextControl, Button } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 
+// Written by PHP (includes/ad-placement.php) before this script loads:
+// which in-story ad plugin the site runs, and whether this block handles it.
+function getAdPluginInfo() {
+	const info = typeof window !== 'undefined' ? window.civicActionBlockAds : null;
+	return info && typeof info === 'object' ? info : { slug: 'none', name: '', handled: false };
+}
+
+// Sidebar panel explaining how in-story ads interact with a floated box.
+// See spec-ad-aware-placement.md. Plain words: editors are not developers.
+function AdsPanel( { align, adFreeParagraphs, setAttributes } ) {
+	const ads = getAdPluginInfo();
+	const floated = align === 'left' || align === 'right';
+
+	let body;
+	if ( ! floated ) {
+		body = (
+			<p>
+				{ __( 'A centered box does not float, so the story does not wrap around it and there is nothing to keep clear of ads.', 'civic-action-block' ) }
+			</p>
+		);
+	} else if ( ads.slug === 'none' ) {
+		body = (
+			<p>
+				{ __( 'No in-story ad plugin was found on this site, so ads will not interrupt the text wrapping around the box.', 'civic-action-block' ) }
+			</p>
+		);
+	} else if ( ! ads.handled ) {
+		body = (
+			<p>
+				{ __( 'This site uses', 'civic-action-block' ) } <strong>{ ads.name }</strong>{ ' ' }
+				{ __( "for in-story ads. This block can't yet keep its ads clear of the box, so an ad may push the story below the box. Use center alignment, or ask Planet Detroit to add support.", 'civic-action-block' ) }
+			</p>
+		);
+	} else {
+		body = (
+			<>
+				<p>
+					{ __( 'This site uses', 'civic-action-block' ) } <strong>{ ads.name }</strong>.{ ' ' }
+					{ __( 'Ads that would land beside the box are moved to after the paragraphs below, so the story keeps wrapping. Raise the number for a long box.', 'civic-action-block' ) }
+				</p>
+				<TextControl
+					label={ __( 'Paragraphs to keep ad-free', 'civic-action-block' ) }
+					type="number"
+					min={ 1 }
+					max={ 30 }
+					value={ String( adFreeParagraphs ?? 8 ) }
+					onChange={ ( value ) => {
+						const n = parseInt( value, 10 );
+						if ( ! Number.isNaN( n ) ) {
+							setAttributes( { adFreeParagraphs: Math.min( 30, Math.max( 1, n ) ) } );
+						}
+					} }
+				/>
+			</>
+		);
+	}
+
+	return (
+		<PanelBody title={ __( 'Ads beside the box', 'civic-action-block' ) } initialOpen={ false }>
+			{ body }
+		</PanelBody>
+	);
+}
+
 export default function Edit( { attributes, setAttributes } ) {
-	const { civicHtml } = attributes;
+	const { civicHtml, align, adFreeParagraphs } = attributes;
 	const [ pasteValue, setPasteValue ] = useState( '' );
 	const [ isReplacing, setIsReplacing ] = useState( false );
 	// Track local edits to the HTML textarea so we only save on blur
@@ -79,6 +143,9 @@ export default function Edit( { attributes, setAttributes } ) {
 							aria-label={ __( 'HTML Code', 'civic-action-block' ) }
 						/>
 					</PanelBody>
+				) }
+				{ civicHtml && ! isReplacing && (
+					<AdsPanel align={ align } adFreeParagraphs={ adFreeParagraphs } setAttributes={ setAttributes } />
 				) }
 			</InspectorControls>
 

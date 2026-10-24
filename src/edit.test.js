@@ -138,3 +138,54 @@ test( 'Clear button removes content', () => {
 	fireEvent.click( screen.getByText( 'Clear' ) );
 	expect( setAttributes ).toHaveBeenCalledWith( { civicHtml: '' } );
 } );
+
+// ─── Ads beside the box (spec-ad-aware-placement.md) ─────────────
+// PHP tells the editor which in-story ad plugin the site runs by setting
+// window.civicActionBlockAds before the editor script loads.
+
+afterEach( () => {
+	delete window.civicActionBlockAds;
+} );
+
+// On a Newspack site the panel explains ads are kept clear and offers the number field
+test( 'ads panel shows the paragraph count field for a floated box on a handled ad plugin', () => {
+	window.civicActionBlockAds = { slug: 'scaip', name: 'Newspack in-story ads', handled: true };
+	renderEdit( { civicHtml: '<div>Content</div>', align: 'right', adFreeParagraphs: 8 } );
+	// The PanelBody mock puts the title in a title attribute, not in text.
+	expect( screen.getByTitle( 'Ads beside the box' ) ).toBeInTheDocument();
+	expect( screen.getByText( /Newspack in-story ads/ ) ).toBeInTheDocument();
+	expect( screen.getByLabelText( 'Paragraphs to keep ad-free' ) ).toHaveValue( '8' );
+} );
+
+// Changing the number saves it to the block
+test( 'changing the paragraph count updates adFreeParagraphs', () => {
+	window.civicActionBlockAds = { slug: 'scaip', name: 'Newspack in-story ads', handled: true };
+	const setAttributes = jest.fn();
+	renderEdit( { civicHtml: '<div>Content</div>', align: 'right', adFreeParagraphs: 8 }, setAttributes );
+	fireEvent.change( screen.getByLabelText( 'Paragraphs to keep ad-free' ), { target: { value: '12' } } );
+	expect( setAttributes ).toHaveBeenCalledWith( { adFreeParagraphs: 12 } );
+} );
+
+// Center alignment does not float, so there is nothing to keep clear
+test( 'ads panel hides the paragraph count field when the box is centered', () => {
+	window.civicActionBlockAds = { slug: 'scaip', name: 'Newspack in-story ads', handled: true };
+	renderEdit( { civicHtml: '<div>Content</div>', align: 'center', adFreeParagraphs: 8 } );
+	expect( screen.queryByLabelText( 'Paragraphs to keep ad-free' ) ).not.toBeInTheDocument();
+	expect( screen.getByText( /nothing to keep clear/i ) ).toBeInTheDocument();
+} );
+
+// A site whose ad plugin we do not handle gets a plain warning and a workaround
+test( 'ads panel warns when the site ad plugin is not handled', () => {
+	window.civicActionBlockAds = { slug: 'advanced-ads', name: 'Advanced Ads', handled: false };
+	renderEdit( { civicHtml: '<div>Content</div>', align: 'right', adFreeParagraphs: 8 } );
+	expect( screen.getByText( /Advanced Ads/ ) ).toBeInTheDocument();
+	expect( screen.getByText( /can't yet keep its ads clear/i ) ).toBeInTheDocument();
+	expect( screen.queryByLabelText( 'Paragraphs to keep ad-free' ) ).not.toBeInTheDocument();
+} );
+
+// No ad plugin detected (or PHP info missing): say so, no field
+test( 'ads panel says no ad plugin was found when PHP passes none', () => {
+	renderEdit( { civicHtml: '<div>Content</div>', align: 'right', adFreeParagraphs: 8 } );
+	expect( screen.getByText( /no in-story ad plugin/i ) ).toBeInTheDocument();
+	expect( screen.queryByLabelText( 'Paragraphs to keep ad-free' ) ).not.toBeInTheDocument();
+} );

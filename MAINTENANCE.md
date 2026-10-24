@@ -30,11 +30,24 @@ The civic action box has interactive features (checkbox tracking, reader respons
 
 This only needs to be done once. The script automatically detects civic action boxes on any page and wires up the interactivity.
 
+## Ads Beside the Box (added in 1.5.0)
+
+Newsroom sites that run in-story ads (MinnPost, Bridge and Planet Detroit all use Newspack's ad inserter) drop an ad every few paragraphs. Newspack's ad container "clears" floats, so an ad that lands beside a floated box jumps below the box and pulls the rest of the story down with it, leaving a blank column next to the box.
+
+Since 1.5.0 the plugin moves any ad that would land in the paragraphs beside the box to just after that stretch. By default it keeps 8 paragraphs after the box ad-free; the block sidebar has an **"Ads beside the box"** panel with a "Paragraphs to keep ad-free" number for longer or shorter boxes. The panel also says which ad plugin the site runs:
+
+- **Newspack in-story ads (Super Cool Ad Inserter)** — handled automatically.
+- **Advanced Ads, Ad Inserter, Broadstreet** — detected but not yet handled. The panel says so and suggests center alignment. Ask Nina to add support when a newsroom on one of these needs it (hooks noted in `spec-ad-aware-placement.md` §6).
+- **None found** — nothing to do.
+
+Hand-placed `[ad]` shortcodes are never moved. Center-aligned boxes are left alone. The feature never removes paragraphs; if it cannot find the ad slots it leaves the story untouched.
+
 ## How to Tell If It's Working
 
 - **In the editor:** You should see a styled preview of the civic action box after pasting and clicking Apply
 - **On the frontend:** The box should float to the right (or left/center depending on setting) with article text wrapping around it
 - **On mobile:** The box should stack to full width instead of floating
+- **With in-story ads (Newspack sites):** no ad should appear beside the box; the first ad after the box shows up after the ad-free paragraphs and the text keeps wrapping until then
 
 ## Common Problems
 
@@ -52,6 +65,11 @@ This only needs to be done once. The script automatically detects civic action b
 - Verify the WPCode snippet is **Active** and set to **Site Wide Footer**
 - If new HTML elements are added to the builder output, their tags/attributes must be added to the `wp_kses` allowlist in `src/render.php` — otherwise WordPress silently strips them
 
+### An ad still pushes the story below the box
+- Open the block, check the **Ads beside the box** panel. If it names a plugin that is "not yet handled", this plugin cannot move those ads; use center alignment for now
+- If it says Newspack ads are handled, raise **Paragraphs to keep ad-free** — a long box needs more paragraphs beside it
+- If the story has fewer paragraphs after the box than the box is tall, no setting helps; move the box higher in the story
+
 ### Block disappeared after saving
 - Check if the `civicHtml` content was accidentally cleared — use the WordPress revision history to restore
 
@@ -66,7 +84,7 @@ This only needs to be done once. The script automatically detects civic action b
 npm test
 ```
 
-**PHP render tests** (server-side output and security — requires wp-env running):
+**PHP tests** (render output, security, and ad placement — requires wp-env running):
 ```bash
 npm run test:php
 ```
@@ -77,6 +95,7 @@ npm run test:php
 |-----------|-------------|------------------------|
 | WordPress | Hosts the plugin | Everything |
 | Newspack theme | Provides the CSS context for text wrapping | Float/wrap may not work on other themes (especially block themes) |
+| Newspack Super Cool Ad Inserter | Places in-story ads as `[ad]` shortcode blocks at `the_content` priority 5 | If it changes how it inserts ads, this plugin stops moving them (story renders normally, the blank-column gap comes back) |
 | civic-action-builder | Generates the HTML you paste into the block | You can't create new civic action boxes, but existing ones still display |
 | WPCode plugin | Loads JavaScript for checkboxes and response form | Civic action box still displays, but checkboxes won't track in GA4 and response form won't submit |
 | Ask Planet Detroit API | Backend for response form submissions | Response form submissions fail (box still displays) |
@@ -87,6 +106,8 @@ npm run test:php
 |------|-------------|
 | `src/render.php` | Controls what appears on the frontend — this is the security boundary |
 | `src/style.scss` | Controls float, alignment, and responsive behavior |
+| `includes/ad-placement.php` | Moves Newspack's in-story ad slots out of the paragraphs beside a floated box |
+| `tests/test-ad-placement.php` | PHP tests for the ad moving rules (run with `npm run test:php`) |
 | `src/edit.js` | Controls the editor experience (paste UI, preview, sidebar) |
 | `src/block.json` | Block configuration (name, attributes, alignment support) |
 | `civic-action-block.php` | Plugin entry point — just registers the block |

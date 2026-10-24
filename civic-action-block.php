@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Civic Action Box
  * Description:       A Gutenberg block for embedding civic action content with alignment support.
- * Version:           1.4.0
+ * Version:           1.5.0
  * Author:            Planet Detroit
  * License:           GPL-2.0-or-later
  * Text Domain:       civic-action-block
@@ -24,8 +24,12 @@ $civicActionUpdateChecker = PucFactory::buildUpdateChecker(
 // Use GitHub releases (not branch) for version detection + release assets for download
 $civicActionUpdateChecker->getVcsApi()->enableReleaseAssets();
 
+// Keeps Newspack's in-story ads out of the paragraphs beside a floated box.
+require __DIR__ . '/includes/ad-placement.php';
+
 function civic_action_block_init() {
-	register_block_type( __DIR__ . '/build' );
+	$block_type = register_block_type( __DIR__ . '/build' );
+	civic_action_block_expose_ad_plugin_to_editor( $block_type );
 	// Ask Planet Detroit reader question form — standalone block
 	$ask_pd_dir = __DIR__ . '/build/ask-planet-detroit';
 	if ( file_exists( $ask_pd_dir . '/block.json' ) ) {

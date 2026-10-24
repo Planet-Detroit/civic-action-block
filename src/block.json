@@ -7,9 +7,19 @@
 	"category": "widgets",
 	"icon": "megaphone",
 	"description": "Embed a civic action box with alignment support for text wrapping.",
-	"keywords": [ "civic", "action", "meeting", "comment", "toolbox" ],
+	"keywords": [
+		"civic",
+		"action",
+		"meeting",
+		"comment",
+		"toolbox"
+	],
 	"supports": {
-		"align": [ "left", "right", "center" ],
+		"align": [
+			"left",
+			"right",
+			"center"
+		],
 		"html": false
 	},
 	"attributes": {
@@ -24,6 +34,10 @@
 		"boxTitle": {
 			"type": "string",
 			"default": "Civic Action Toolbox"
+		},
+		"adFreeParagraphs": {
+			"type": "integer",
+			"default": 8
 		}
 	},
 	"textdomain": "civic-action-block",

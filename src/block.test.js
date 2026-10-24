@@ -51,3 +51,11 @@ test( 'block uses server-side render.php', () => {
 test( 'uses block API version 3', () => {
 	expect( metadata.apiVersion ).toBe( 3 );
 } );
+
+// adFreeParagraphs controls how many paragraphs beside a floated box stay
+// free of auto-inserted ads (spec-ad-aware-placement.md). Default 8.
+test( 'adFreeParagraphs attribute exists and defaults to 8', () => {
+	expect( metadata.attributes.adFreeParagraphs ).toBeDefined();
+	expect( metadata.attributes.adFreeParagraphs.type ).toBe( 'integer' );
+	expect( metadata.attributes.adFreeParagraphs.default ).toBe( 8 );
+} );

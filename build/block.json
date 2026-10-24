@@ -34,6 +34,10 @@
     "boxTitle": {
       "type": "string",
       "default": "Civic Action Toolbox"
+    },
+    "adFreeParagraphs": {
+      "type": "integer",
+      "default": 8
     }
   },
   "textdomain": "civic-action-block",
