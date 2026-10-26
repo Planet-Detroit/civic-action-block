@@ -30,11 +30,26 @@
 		font-weight: 700;
 	}
 
-	// Fix checkbox + bullet double marker on existing and new posts.
-	// When a list contains checkboxes, suppress bullets and remove indent.
-	&__content .civic-action-box ul:has(.civic-checkbox) {
+	// Fix mark + bullet double marker on existing and new posts.
+	// When a list carries a tick box (.civic-checkbox) or, since the
+	// Toolbox's Oct 26 2026 release, a graphic check (.civic-check),
+	// suppress bullets and remove indent. Newspack also draws bullets
+	// with li::marker / li::before, so those go too.
+	&__content .civic-action-box ul:has(.civic-checkbox),
+	&__content .civic-action-box ul:has(.civic-check) {
 		list-style: none !important;
 		padding-left: 0 !important;
+		margin-left: 0 !important;
+
+		li {
+			list-style: none !important;
+			padding-left: 0 !important;
+		}
+		li::before,
+		li::marker {
+			content: none !important;
+			display: none !important;
+		}
 	}
 
 	// Responsive: stack on mobile instead of floating
