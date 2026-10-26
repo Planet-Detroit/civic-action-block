@@ -30,6 +30,10 @@ The civic action box has interactive features (checkbox tracking, reader respons
 
 This only needs to be done once. The script automatically detects civic action boxes on any page and wires up the interactivity.
 
+## No Bullet Beside the Mark (fixed in 1.5.2)
+
+The Toolbox marks each item in a box with either a clickable tick box (`.civic-checkbox`) or, since Oct 26 2026 by default, a graphic check (`.civic-check`). Newspack draws its own bullet on every list item (`li::marker` / `li::before`), which showed as "• ✓" on planetdetroit.org. The block's stylesheet suppresses bullets and indent inside the box for both kinds of mark. Boxes published from the Toolbox after Oct 26 2026 also carry their own reset, so the fix matters most for boxes pasted earlier.
+
 ## Ads Beside the Box (added in 1.5.0; panel always visible since 1.5.1)
 
 Newsroom sites that run in-story ads (MinnPost, Bridge and Planet Detroit all use Newspack's ad inserter) drop an ad every few paragraphs. Newspack's ad container "clears" floats, so an ad that lands beside a floated box jumps below the box and pulls the rest of the story down with it, leaving a blank column next to the box.
